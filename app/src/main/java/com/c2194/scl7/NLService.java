@@ -23,8 +23,9 @@ public class NLService extends NotificationListenerService {
 
             Log.e("-----能够跳到锁屏界面--------", "---------" + arg1);
               Intent intent = new Intent(context, MainActivity.class);
-              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              startActivity(intent);
+             // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
         }
     };
 
