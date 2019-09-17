@@ -155,9 +155,23 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
         try {
 
-            gifFromAssets = new GifDrawable(getAssets(),"a4.gif");
+            Bundle bundle = this.getIntent().getExtras();
+            //接收name值
+            String typ = bundle.getString("type");
+
+            String asname="a1.gif";
+            if(typ.equals("1")) asname="a1.gif";
+            if(typ.equals("2")) asname="a2.gif";
+            if(typ.equals("3")) asname="a3.gif";
+
+            gifFromAssets = new GifDrawable(getAssets(),asname);
+
+
 
             gifImageView.setImageDrawable(gifFromAssets);
+
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.text.TextUtils;
@@ -22,10 +24,81 @@ public class NLService extends NotificationListenerService {
 
 
             Log.e("-----能够跳到锁屏界面--------", "---------" + arg1);
-              Intent intent = new Intent(context, MainActivity.class);
-             // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-              intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
+
+
+            ////
+            //
+            /////////
+
+
+            mainLib mainlib = new mainLib();
+            String filepath ;
+            filepath = getFilesDir().getPath();
+
+
+            FileEdit fe = new FileEdit(filepath);
+
+
+            String text =fe.Read();
+
+
+            Log.e("----", "---------" + text);
+
+            String[] txtArray = text.split("\\|");
+
+
+
+
+            //获取reclockID
+            //int fxnum= Integer.parseInt(txtArray[5]);
+
+
+
+
+            String m_szAndroidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+
+
+
+
+            //reRSIDid = mainlib.ReRSID(m_szAndroidID);
+
+
+            String reClockID = mainlib.ReCLOCKID(m_szAndroidID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ////////////
+            //
+            //////////////////
+
+            if(reClockID.equals(txtArray[5])) {
+
+
+                Intent intent = new Intent(context, MainActivity.class);
+                // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                Bundle bundle=new Bundle();
+                //传递name参数为tinyphp
+                bundle.putString("type", txtArray[4]);
+                intent.putExtras(bundle);
+
+
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+
+            }
         }
     };
 

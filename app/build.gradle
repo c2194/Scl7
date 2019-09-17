@@ -43,7 +43,7 @@ dependencies {
 
 }
 
-
-
-
-
+dependencies {
+    implementation 'androidx.appcompat:appcompat:+'
+    implementation 'com.google.android.material:material:+'
+}
