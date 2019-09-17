@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
@@ -63,7 +65,11 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
     GestureDetector detector;
 
 
+    public static final  String TAG="MainActivity";
+
     private  static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;
+
+    int clsec=10;
 
 
 
@@ -152,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
         gifImageView = (GifImageView)findViewById(R.id.gifView);
-
+        String showMess = "";
         try {
 
             Bundle bundle = this.getIntent().getExtras();
@@ -169,6 +175,11 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
             gifImageView.setImageDrawable(gifFromAssets);
+
+            showMess = bundle.getString("mess");
+            clsec = Integer.parseInt(bundle.getString("sec"));
+
+
 
 
 
@@ -270,6 +281,18 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
         iv2 = (ImageView)findViewById(R.id.imageView2);
         iv4 = (ImageView)findViewById(R.id.imageView4);
         iv3 = (ImageView)findViewById(R.id.imageView3);
+
+
+        if (showMess.equals("1")){
+            iv2.setVisibility(View.VISIBLE);
+            iv3.setVisibility(View.VISIBLE);
+            iv4.setVisibility(View.VISIBLE);
+        }else{
+            iv2.setVisibility(View.GONE);
+            iv3.setVisibility(View.GONE);
+            iv4.setVisibility(View.GONE);
+
+        }
 
 
         //  try {
@@ -439,7 +462,7 @@ protected  void unReg(){
                         secAdd =0;
                     }
 
-                    if(secAdd == 210  ) {
+                    if(secAdd == clsec  ) {
 
                         //  wakeLock.acquire();
                         Log.e("----", "---------" + "SCREEN OFF");
@@ -447,8 +470,12 @@ protected  void unReg(){
 
                         boolean admin = policyManager.isAdminActive(adminReceiver);
                         if (admin) {
-                            policyManager.lockNow();
+                            if(isTopActivity()) {
+                                policyManager.lockNow();
+                            }
                             // handler.sendEmptyMessageDelayed(1,3000);
+
+
                         } else {
                             Toast.makeText(MainActivity.this, "没有设备管理权限",
                                     Toast.LENGTH_LONG).show();
@@ -628,8 +655,19 @@ protected  void unReg(){
 
 
 
-
-
+    private boolean isTopActivity()
+    {
+        boolean isTop = false;
+        ActivityManager am = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+      //  DebugLog.d(TAG, "isTopActivity = " + cn.getClassName());
+        if (cn.getClassName().contains(TAG))
+        {
+            isTop = true;
+        }
+       // DebugLog.d(TAG, "isTop = " + isTop);
+        return isTop;
+    }
 
 
 }

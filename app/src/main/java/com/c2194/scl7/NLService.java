@@ -82,7 +82,7 @@ public class NLService extends NotificationListenerService {
             //
             //////////////////
 
-            if(reClockID.equals(txtArray[5])) {
+            if(reClockID.equals(txtArray[5]) && txtArray[2].equals("1") ) {
 
 
                 Intent intent = new Intent(context, MainActivity.class);
@@ -91,6 +91,8 @@ public class NLService extends NotificationListenerService {
                 Bundle bundle=new Bundle();
                 //传递name参数为tinyphp
                 bundle.putString("type", txtArray[4]);
+                bundle.putString("mess",txtArray[3]);
+                bundle.putString("sec",txtArray[6]);
                 intent.putExtras(bundle);
 
 

@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.provider.Settings;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +35,7 @@ public class ScrollingActivity extends AppCompatActivity {
     Switch sw2;
     Switch sw3;
     EditText edText;
+    EditText edText2;
 
     String[] txtArray;
     FileEdit fe;
@@ -104,6 +107,7 @@ public class ScrollingActivity extends AppCompatActivity {
         sw2 = (Switch)findViewById(R.id.switch2);
         sw3 = (Switch)findViewById(R.id.switch3);
         edText = (EditText)findViewById(R.id.editText);
+        edText2 =(EditText)findViewById(R.id.editText2);
 
 
 
@@ -155,6 +159,33 @@ public class ScrollingActivity extends AppCompatActivity {
         });
 
 
+        edText2.setText(txtArray[6]);
+
+
+
+        edText2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                txtArray[6] = edText2.getText().toString().trim();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+
+
+
 
 
 
@@ -200,7 +231,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
-        ShowInit();
+
 
 
 
@@ -281,6 +312,13 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
+                if(txtArray[5].equals(reClockID)) {
+                    finish();
+                }
+
+
+
+
             }
         });
 
@@ -291,7 +329,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
-
+        ShowInit();
 
 
 
@@ -369,6 +407,11 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
         }
+
+
+
+        edText2.setText(txtArray[6]);
+
 
 
 
