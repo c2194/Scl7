@@ -60,10 +60,10 @@ public class NLService extends NotificationListenerService {
 
 
 
-            //reRSIDid = mainlib.ReRSID(m_szAndroidID);
+            String reRSIDid = mainlib.ReRSID(m_szAndroidID);
 
 
-            String reClockID = mainlib.ReCLOCKID(m_szAndroidID);
+            String reClockID = mainlib.ReCLOCKID(reRSIDid);
 
 
 

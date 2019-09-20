@@ -1,6 +1,8 @@
 package com.c2194.scl7;
 
 
+import android.util.Log;
+
 public class mainLib {
 
 
@@ -65,12 +67,16 @@ public class mainLib {
             iasien++;
 
             iasob= (int)(iss*1000)/3;
-
+        //    Log.e("----", "-----issadd = issadd+iasob; ----" + iasob );
             issadd = issadd+iasob;
 
 
 
         }
+
+
+
+        //Log.e("----", "-----issadd = issadd+iasob;  rsid  ----" + issadd );
 
 
         int ggn1 = issadd *10 /3;
@@ -87,6 +93,8 @@ public class mainLib {
         for(byte reiss:ress ){
 
             int reissint = (int)reiss;
+
+            Log.e("----", "-----issadd = issadd+iasob;  rsid  ----" + reissint );
             ress_g1 =0;
             for(int i=0;i<reissint;i++){
 

@@ -198,7 +198,7 @@ public class ScrollingActivity extends AppCompatActivity {
         reRSIDid = mainlib.ReRSID(m_szAndroidID);
 
 
-        reClockID = mainlib.ReCLOCKID(m_szAndroidID);
+        reClockID = mainlib.ReCLOCKID(reRSIDid);
 
 
 

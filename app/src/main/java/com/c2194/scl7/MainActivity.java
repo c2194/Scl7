@@ -170,11 +170,17 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
             if(typ.equals("2")) asname="a2.gif";
             if(typ.equals("3")) asname="a3.gif";
 
+
+            Log.e("-----进到oncreate--------", "---------" );
+
             gifFromAssets = new GifDrawable(getAssets(),asname);
+            gifFromAssets.stop();
+
 
 
 
             gifImageView.setImageDrawable(gifFromAssets);
+
 
             showMess = bundle.getString("mess");
             clsec = Integer.parseInt(bundle.getString("sec"));
@@ -463,15 +469,24 @@ protected  void unReg(){
                     }
 
                     if(secAdd == clsec  ) {
+                        secAdd++;
 
                         //  wakeLock.acquire();
                         Log.e("----", "---------" + "SCREEN OFF");
-
+                        gifFromAssets.reset();
+                        gifFromAssets.stop();
 
                         boolean admin = policyManager.isAdminActive(adminReceiver);
                         if (admin) {
                             if(isTopActivity()) {
+
                                 policyManager.lockNow();
+
+
+
+
+
+
                             }
                             // handler.sendEmptyMessageDelayed(1,3000);
 
