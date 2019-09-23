@@ -23,7 +23,7 @@ public class NLService extends NotificationListenerService {
         public void onReceive(Context context, Intent arg1) {
 
 
-            Log.e("-----能够跳到锁屏界面--------", "---------" + arg1);
+         //   Log.e("-----能够跳到锁屏界面--------", "---------" + arg1);
 
 
             ////
@@ -42,7 +42,7 @@ public class NLService extends NotificationListenerService {
             String text =fe.Read();
 
 
-            Log.e("----", "---------" + text);
+         //   Log.e("----", "---------" + text);
 
             String[] txtArray = text.split("\\|");
 
@@ -93,6 +93,7 @@ public class NLService extends NotificationListenerService {
                 bundle.putString("type", txtArray[4]);
                 bundle.putString("mess",txtArray[3]);
                 bundle.putString("sec",txtArray[6]);
+                bundle.putString("face",txtArray[7]);
                 intent.putExtras(bundle);
 
 
@@ -111,7 +112,7 @@ public class NLService extends NotificationListenerService {
         //这里只是获取了包名和通知提示信息，其他数据可根据需求取，注意空指针就行
         String pkg = sbn.getPackageName();
         CharSequence tickerText = sbn.getNotification().tickerText;
-        Log.e("-------------------------", " ------\npkg:"+pkg+"\ntickerText:"+TextUtils.isEmpty(tickerText+"-----"+tickerText));
+      //  Log.e("-------------------------", " ------\npkg:"+pkg+"\ntickerText:"+TextUtils.isEmpty(tickerText+"-----"+tickerText));
 
        //if(pkg.equals())
 
@@ -145,7 +146,7 @@ public class NLService extends NotificationListenerService {
 
         this.registerReceiver(broadcastReceiver, iFilter);
 
-        Log.e("-------------------------", " -------3333333333333333333333333333333333---");
+    //    Log.e("-------------------------", " -------3333333333333333333333333333333333---");
 
 
 

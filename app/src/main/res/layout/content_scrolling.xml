@@ -20,7 +20,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginEnd="32dp"
             android:text="呼吸屏开关"
-            android:thumb="@android:drawable/presence_invisible"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.633"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,13 +32,32 @@
             android:layout_height="46dp"
             android:layout_marginEnd="32dp"
             android:text="显示提醒"
-            android:thumb="@android:drawable/presence_invisible"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.633"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switch2"
-            app:layout_constraintVertical_bias="0.049" />
+            app:layout_constraintVertical_bias="0.235" />
+
+
+
+
+
+
+        <Switch
+            android:id="@+id/switch5"
+            android:layout_width="240dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="32dp"
+            android:text="开启指纹或人脸后跟随解锁"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.611"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/switch2"
+            app:layout_constraintVertical_bias="0.067" />
 
         <EditText
             android:id="@+id/editText"
@@ -126,6 +145,8 @@
             android:textColor="#1E1E1E"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/switch3" />
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

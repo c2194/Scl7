@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
     int clsec=10;
 
 
+    int fingerCode = 1;
+
+    int face=0;
+
+
+
 
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -79,7 +85,10 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
         public void onReceive(Context context, Intent intent) {
             String str = intent.getStringExtra("info");
 
-            Log.e("----", " INFO " + str);
+       //     Log.e("----", " INFO " + str);
+
+
+            boolean ScrrenOn = false;
 
 
             if(str.equals("com.android.dialer")){
@@ -95,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
             if(str.equals("com.tencent.mobileqq")){
 
                 iv4.setAlpha(255);
+                ScrrenOn = true;
 
 
             }
@@ -105,13 +115,23 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
                 iv2.setAlpha(255);
 
+                ScrrenOn =true;
+
 
             }
             if(str.equals("com.android.mms")){
 
                 iv3.setAlpha(255);
 
+                ScrrenOn = true;
 
+
+            }
+
+
+            if(ScrrenOn){
+
+                turnOnScreen();
             }
 
 
@@ -131,8 +151,9 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        fingerCode=3;
         this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED, FLAG_HOMEKEY_DISPATCHED);//关键代码
+
 
 
         Window window = getWindow();
@@ -171,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
             if(typ.equals("3")) asname="a3.gif";
 
 
-            Log.e("-----进到oncreate--------", "---------" );
+     //       Log.e("-----进到oncreate--------", "---------" );
 
             gifFromAssets = new GifDrawable(getAssets(),asname);
             gifFromAssets.stop();
@@ -184,6 +205,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
             showMess = bundle.getString("mess");
             clsec = Integer.parseInt(bundle.getString("sec"));
+            face = Integer.parseInt(bundle.getString("face"));
 
 
 
@@ -253,6 +275,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
         IntentFilter iFilter2 = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        IntentFilter iFilter3 = new IntentFilter(Intent.ACTION_USER_PRESENT);
 
 
 
@@ -260,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
         unReg();
         this.registerReceiver(broadcastReceiver2, iFilter2);
+        this.registerReceiver(broadcastReceiver3, iFilter3);
 
 
 
@@ -315,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
         iv4.setAlpha(90);
 
 
-        Log.e("----", "---------" + "00000000000");
+   //     Log.e("----", "---------" + "00000000000");
 
 
 
@@ -380,6 +404,7 @@ protected  void unReg(){
 
     try {
         unregisterReceiver(broadcastReceiver2);
+        unregisterReceiver(broadcastReceiver3);
     } catch (IllegalArgumentException e) {
         if (e.getMessage().contains("Receiver not registered")) {
             // Ignore this exception. This is exactly what is desired
@@ -388,6 +413,9 @@ protected  void unReg(){
             throw e;
         }
     }
+
+
+
 
 }
 
@@ -434,7 +462,14 @@ protected  void unReg(){
 
            // edraw1.init();
 
-            Log.e("----", "---------" + "ON");
+      //      Log.e("----", "---------" + "ON");
+
+            scrSec=0;
+            scrSecClock=1;
+
+
+
+
 
             setTime();
 
@@ -447,8 +482,57 @@ protected  void unReg(){
 
 
 
+
+
+
         }
     };
+
+
+    private BroadcastReceiver broadcastReceiver3 = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent arg1) {
+
+
+            // edraw1.init();
+
+
+
+
+               if(face>0) {
+     //              Log.e("----", "------关闭 1 ---" + "1");
+
+                   scrSec=0;
+                   scrSecClock=0;
+
+                   secAdd = 100;
+                   finish();
+
+               }
+
+
+
+
+
+
+
+
+        }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     int secAdd=0;
@@ -462,17 +546,32 @@ protected  void unReg(){
                 case 1:
 
 
+
+                    if(scrSecClock ==1 ){
+                        if(scrSec == 1000) scrSec=1000;
+                        scrSec++;
+                    }
+
+
+
+
+
                     secAdd++;
 
                     if(secAdd>10000){
                         secAdd =0;
                     }
 
+
+
+
+
+
                     if(secAdd == clsec  ) {
                         secAdd++;
 
                         //  wakeLock.acquire();
-                        Log.e("----", "---------" + "SCREEN OFF");
+      //                  Log.e("----", "---------" + "SCREEN OFF");
                         gifFromAssets.reset();
                         gifFromAssets.stop();
 
@@ -508,6 +607,14 @@ protected  void unReg(){
 
         }
     };
+
+int scrSec =0;
+int scrSecClock=0;
+
+
+
+
+
 
     @Override
     public boolean onDown(MotionEvent motionEvent) {
@@ -664,6 +771,7 @@ protected  void unReg(){
 
 //        unregisterReceiver(this.broadcastReceiver);
         unregisterReceiver(this.broadcastReceiver2);
+        unregisterReceiver(this.broadcastReceiver3);
 
     }
 
@@ -683,6 +791,11 @@ protected  void unReg(){
        // DebugLog.d(TAG, "isTop = " + isTop);
         return isTop;
     }
+
+
+
+
+
 
 
 }

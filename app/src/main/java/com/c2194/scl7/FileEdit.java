@@ -27,7 +27,7 @@ String filePath;
         File file = new File(filePath+fileName);
         if(!file.exists()){
 
-            String initstr= "|StarT|1|0|1|0|5|6|7|string1|string2|string3|EnD|";
+            String initstr= "|StarT|1|1|1|0|7|0|7|string1|string2|string3|EnD|";
 
 // |StarT|[2]:呼吸屏幕开关 |[3] 是否显示提醒 |[4] 效果编号 |[5] SCID |5|6|7|string1|string2|string3|EnD|
            /// throw new RuntimeException("要读取的文件不存在");

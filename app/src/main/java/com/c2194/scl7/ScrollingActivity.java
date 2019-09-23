@@ -34,6 +34,8 @@ public class ScrollingActivity extends AppCompatActivity {
 
     Switch sw2;
     Switch sw3;
+    Switch sw5;
+
     EditText edText;
     EditText edText2;
 
@@ -85,14 +87,14 @@ public class ScrollingActivity extends AppCompatActivity {
         String text =fe.Read();
 
 
-        Log.e("----", "---------" + text);
+  //      Log.e("----", "---------" + text);
 
         txtArray = text.split("\\|");
+//
+//        Log.e("----", "Long" + txtArray.length);
 
-        Log.e("----", "Long" + txtArray.length);
-
-        Log.e("----", "1" + txtArray[1]);
-        Log.e("----", "all" + txtArray);
+//        Log.e("----", "1" + txtArray[1]);
+//        Log.e("----", "all" + txtArray);
 
 
 
@@ -106,6 +108,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
         sw2 = (Switch)findViewById(R.id.switch2);
         sw3 = (Switch)findViewById(R.id.switch3);
+        sw5 = (Switch)findViewById(R.id.switch5);
         edText = (EditText)findViewById(R.id.editText);
         edText2 =(EditText)findViewById(R.id.editText2);
 
@@ -157,6 +160,18 @@ public class ScrollingActivity extends AppCompatActivity {
                 }
             }
         });
+
+        sw5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(sw5.isChecked()){
+                    txtArray[7]="1";
+                }else{
+                    txtArray[7]="0";
+                }
+            }
+        });
+
 
 
         edText2.setText(txtArray[6]);
@@ -217,12 +232,12 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
-        Log.e("-------------------------", " rsid" + reRSIDid);
-        Log.e("----------------------------", "click id " +  reClockID);
+   //     Log.e("-------------------------", " rsid" + reRSIDid);
+  //      Log.e("----------------------------", "click id " +  reClockID);
 
 
-        Toast.makeText(ScrollingActivity.this,""+reClockID,
-                Toast.LENGTH_LONG).show();
+  //      Toast.makeText(ScrollingActivity.this,""+reClockID,
+   //             Toast.LENGTH_LONG).show();
 
 
 
@@ -364,6 +379,13 @@ public class ScrollingActivity extends AppCompatActivity {
             sw3.setChecked(true);
         }
 
+
+        if(txtArray[7].equals("0")){
+
+            sw5.setChecked(false);
+        }else{
+            sw5.setChecked(true);
+        }
 
         if(txtArray[4].equals("1")){
 

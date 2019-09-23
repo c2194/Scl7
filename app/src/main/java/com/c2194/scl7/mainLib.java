@@ -94,7 +94,7 @@ public class mainLib {
 
             int reissint = (int)reiss;
 
-            Log.e("----", "-----issadd = issadd+iasob;  rsid  ----" + reissint );
+       //     Log.e("----", "-----issadd = issadd+iasob;  rsid  ----" + reissint );
             ress_g1 =0;
             for(int i=0;i<reissint;i++){
 
