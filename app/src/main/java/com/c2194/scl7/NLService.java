@@ -94,6 +94,10 @@ public class NLService extends NotificationListenerService {
                 bundle.putString("mess",txtArray[3]);
                 bundle.putString("sec",txtArray[6]);
                 bundle.putString("face",txtArray[7]);
+                bundle.putString("touch",txtArray[8]);
+                bundle.putString("radio",txtArray[9]);
+
+
                 intent.putExtras(bundle);
 
 

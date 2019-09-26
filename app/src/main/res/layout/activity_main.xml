@@ -11,10 +11,13 @@
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/gifView"
-            android:layout_width="1080px"
-            android:layout_height="2250px"
+
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
             android:background="#ff000000"
-            android:scaleType="centerCrop"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

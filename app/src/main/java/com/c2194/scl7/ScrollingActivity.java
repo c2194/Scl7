@@ -53,6 +53,8 @@ public class ScrollingActivity extends AppCompatActivity {
 
     String reClockID;
 
+    String enCodeStr;
+
 
 
     @Override
@@ -76,7 +78,40 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         mainlib = new mainLib();
+
+
+
+        enCodeStr = getResources().getString(R.string.large_text);
+
+        String teStr= mainlib.EnCode("1234|abcd|DEFG|1234567890|",enCodeStr);
+
+
+        Log.e("----", "---------" + teStr);
+
+
+        String tenStr = mainlib.UnCode(teStr,enCodeStr);
+
+        Log.e("----", "---------" + tenStr);
+
+
+
+
+
+
+
+
         String filepath ;
         filepath = this.getFilesDir().getPath();
 
@@ -456,7 +491,21 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
+protected String[] enCode(String str){
 
+        String[] re= {"",""};
+
+    enCodeStr = getResources().getString(R.string.large_text);
+
+
+
+
+
+
+
+
+ return re;
+}
 
 
 
