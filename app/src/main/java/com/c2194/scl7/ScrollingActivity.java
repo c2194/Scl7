@@ -12,6 +12,8 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
+import android.os.Message;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +23,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import java.util.Date;
 
 
 public class ScrollingActivity extends AppCompatActivity {
@@ -54,6 +58,27 @@ public class ScrollingActivity extends AppCompatActivity {
     String reClockID;
 
     String enCodeStr;
+
+    String m_szAndroidID;
+
+    String Ro_ClockID="";
+
+    String Ro_Radio="404";
+
+    int Ro_State=0;
+
+
+
+    private static final int MESS_WHAT_TEST_POST = 301;
+    private static final int MESS_WHAT_TEST_GET = 302;
+
+
+    private HttpTool httpTool;
+    private Button test_POST;
+    private Button test_GET;
+
+
+
 
 
 
@@ -95,15 +120,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
         enCodeStr = getResources().getString(R.string.large_text);
 
-        String teStr= mainlib.EnCode("1234|abcd|DEFG|1234567890|",enCodeStr);
 
-
-        Log.e("----", "---------" + teStr);
-
-
-        String tenStr = mainlib.UnCode(teStr,enCodeStr);
-
-        Log.e("----", "---------" + tenStr);
 
 
 
@@ -147,6 +164,8 @@ public class ScrollingActivity extends AppCompatActivity {
         edText = (EditText)findViewById(R.id.editText);
         edText2 =(EditText)findViewById(R.id.editText2);
 
+
+        //edText.setVisibility(View.GONE);
 
 
         bu2.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +232,8 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
+
+
         edText2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -240,7 +261,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
-        String m_szAndroidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        m_szAndroidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
 
@@ -299,72 +320,23 @@ public class ScrollingActivity extends AppCompatActivity {
         onbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String idStr = edText.getText().toString();
-
-                idStr = idStr.trim();
-
-
-
-                if(idStr.equals(reClockID)){
-
-                    txtArray[5] = idStr;
-
-
-
-
-
-
-
-
-
-
-                    startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-
-
-
-                    ComponentName adminReceiver = new ComponentName(ScrollingActivity.this, ScreenOffAdminReceiver.class);
-
-                    Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-                    intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,  adminReceiver);
-                    intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"开启后就可以使用锁屏功能了...");//显示位置见图二
-
-                    startActivityForResult(intent, 0);
-
-
-
-
-                }else {
-
-
-                    if(txtArray[5].equals(reClockID)){
-
-
-
-
-
-
-
-
-                    }else {
-
-
-                        txtArray[5] = "0";
-
-                    }
-
-                }
-
-
-                fe.Save(txtArray);
-                ShowInit();
-
-
 
 
 
                 if(txtArray[5].equals(reClockID)) {
-                    finish();
+
+
+
+                    fe.Save(txtArray);
+
+                   finish();
+                }else{
+
+                    GetRegInfo("2");
+
+
                 }
+
 
 
 
@@ -381,7 +353,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
         ShowInit();
 
-
+        GetRegInfo("1");
 
 
     }
@@ -509,6 +481,174 @@ protected String[] enCode(String str){
 
 
 
+protected  void GetRegInfo(String act){
+
+
+        String mod =  android.os.Build.BRAND+"|"+android.os.Build.MODEL+"|"+reRSIDid+"|"+m_szAndroidID+"|"+edText.getText().toString()+"|";
+
+        mod = mainlib.EnCode(mod,enCodeStr);
+
+    String Url = "http://www.50song.com/r/rereg.php?act="+act+"&info="+mod+"&time=2020-12-30";
+
+
+    Log.e("-------------------------", " URL " + Url);
+    httpTool = new HttpTool(HttpTool.MODE_GET, Url, MESS_WHAT_TEST_GET, handler);
+
+    httpTool.clearData();
+
+    httpTool.start();
+
+}
+
+
+
+
+
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+     //   httpTool.stop();
+    }
+
+
+
+
+    final Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            // System.out.println(msg);
+
+            switch (msg.what) {
+                case MESS_WHAT_TEST_POST:
+                    //test_POST.setText(msg.obj.toString());
+                    break;
+                case MESS_WHAT_TEST_GET:
+
+
+                    // String re = mainlib.UnCode(msg.obj.toString(),enCodeStr);
+
+                    ActN(msg.obj.toString());
+
+                    //  Log.e("----", "----re -----" + re);
+                    //      test_GET.setText("SUCC");
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+
+
+
+    protected void ActN(String rStr ){
+
+
+
+        String[] rStrArr =  rStr.split("\\|");
+
+        String re1 =       mainlib.UnCode(rStrArr[1],enCodeStr);
+
+        String[] RE2 =  re1.split("\\|");
+
+
+
+        if(RE2[1].equals("N")){
+
+
+            edText.setVisibility(View.VISIBLE);
+
+
+
+
+        }
+
+
+
+        if(RE2[1].equals("RO")){  //已将注册了 可以开启
+
+
+            edText.setVisibility(View.GONE);
+
+            Ro_ClockID = RE2[2];
+            Ro_Radio = RE2[4];
+
+            txtArray[5] = Ro_ClockID;
+            txtArray[9] = Ro_Radio;
+
+            Ro_State=1;
+
+
+
+
+
+        }
+
+
+        if(RE2[1].equals("OK")){  //注册成功 可以关闭 activity了
+
+
+
+
+            Ro_ClockID = RE2[2];
+            Ro_Radio = RE2[4];
+
+            txtArray[5] = Ro_ClockID;
+            txtArray[9] = Ro_Radio;
+
+            Ro_State=1;
+
+
+            tos("["+RE2[5]+"] : "+RE2[3]+" "  );
+
+            SetQX();
+
+
+
+
+
+        }
+
+
+        if(RE2[1].equals("NOUSER")) {  //用户ID错误
+
+            tos("密锁无效！");
+
+        }
+        if(RE2[1].equals("NUM")) {  //没有点数了
+
+            tos("兑换卡用完了！");
+
+        }
+
+
+
+
+
+    }
+
+   protected void tos(String str){
+       Toast.makeText(ScrollingActivity.this,str,
+               Toast.LENGTH_LONG).show();
+
+
+
+   }
+
+
+    protected void  SetQX(){
+
+
+
+        String idStr = edText.getText().toString();
+
+        idStr = idStr.trim();
+
+
+
+        if(txtArray[5].equals(reClockID)) {
 
 
 
@@ -518,6 +658,47 @@ protected String[] enCode(String str){
 
 
 
+
+
+
+            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+
+
+
+            ComponentName adminReceiver = new ComponentName(ScrollingActivity.this, ScreenOffAdminReceiver.class);
+
+            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,  adminReceiver);
+            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"开启后就可以使用锁屏功能了...");//显示位置见图二
+
+            startActivityForResult(intent, 0);
+
+            fe.Save(txtArray);
+            finish();
+
+        }else {
+
+
+
+
+
+        }
+
+
+        fe.Save(txtArray);
+        ShowInit();
+
+
+
+
+
+
+
+
+
+
+
+    }
 
 
 }

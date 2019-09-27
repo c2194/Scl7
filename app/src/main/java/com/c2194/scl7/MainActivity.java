@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
     ImageView iv2;
     ImageView iv3;
     ImageView iv4;
+    ImageView iv5;
 
     Thread mThread;
 
@@ -167,6 +169,9 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
 
+
+
+
         setContentView(R.layout.activity_main);
 
 
@@ -244,8 +249,13 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
         boolean admin = policyManager.isAdminActive(adminReceiver);
         if (admin) {
-            policyManager.lockNow();
+
+            if(mPowerManager.isScreenOn()) {
+                policyManager.lockNow();
+            }
             // handler.sendEmptyMessageDelayed(1,3000);
+
+
         } else {
             Toast.makeText(MainActivity.this,"没有设备管理权限",
                     Toast.LENGTH_LONG).show();
@@ -300,6 +310,16 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
 
+
+
+
+
+
+
+
+
+
+
         tview1 = (TextView) findViewById(R.id.textView);
         tview2 = (TextView) findViewById(R.id.textView2);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "font/Electrolize-Regular.ttf");
@@ -311,16 +331,19 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
         iv2 = (ImageView)findViewById(R.id.imageView2);
         iv4 = (ImageView)findViewById(R.id.imageView4);
         iv3 = (ImageView)findViewById(R.id.imageView3);
+        iv5 = (ImageView)findViewById(R.id.imageView5);
 
 
         if (showMess.equals("1")){
             iv2.setVisibility(View.VISIBLE);
             iv3.setVisibility(View.VISIBLE);
             iv4.setVisibility(View.VISIBLE);
+            iv5.setVisibility(View.VISIBLE);
         }else{
             iv2.setVisibility(View.GONE);
             iv3.setVisibility(View.GONE);
             iv4.setVisibility(View.GONE);
+            iv5.setVisibility(View.GONE);
 
         }
 
@@ -337,6 +360,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
         iv2.setAlpha(90);
         iv3.setAlpha(90);
         iv4.setAlpha(90);
+        iv5.setAlpha(90);
 
 
    //     Log.e("----", "---------" + "00000000000");
@@ -478,6 +502,56 @@ protected  void unReg(){
 
 
 
+            BatteryManager powermanager = (BatteryManager) getSystemService(BATTERY_SERVICE);
+            int pvalue = powermanager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+
+
+
+            if(pvalue<20){
+                iv5.setImageResource(R.drawable.power0);
+
+            }
+
+            if(pvalue>19 && pvalue<30 ){
+                iv5.setImageResource(R.drawable.power20);
+
+            }
+
+
+            if(pvalue>29 && pvalue<40 ){
+                iv5.setImageResource(R.drawable.power30);
+
+            }
+            if(pvalue>39 && pvalue<55 ){
+                iv5.setImageResource(R.drawable.power50);
+
+            }
+
+            if(pvalue>54 && pvalue<70 ){
+                iv5.setImageResource(R.drawable.power60);
+
+            }
+
+            if(pvalue>69 && pvalue<80 ){
+                iv5.setImageResource(R.drawable.power80);
+
+            }
+            if(pvalue>79 && pvalue<90 ){
+                iv5.setImageResource(R.drawable.power90);
+
+            }
+            if(pvalue>89 && pvalue<101 ){
+                iv5.setImageResource(R.drawable.power100);
+
+            }
+
+
+
+            Log.e("----", "----POWER-----" + pvalue);
+
+
+
+
 
 
 
@@ -507,7 +581,8 @@ protected  void unReg(){
                    scrSecClock=0;
 
                    secAdd = 100;
-                   finish();
+
+                       finish();
 
                }
 
@@ -579,8 +654,12 @@ protected  void unReg(){
                         if (admin) {
                             if(isTopActivity()) {
 
-                                policyManager.lockNow();
 
+
+                                if(mPowerManager.isScreenOn()) {
+
+                                    policyManager.lockNow();
+                                }
 
 
 
