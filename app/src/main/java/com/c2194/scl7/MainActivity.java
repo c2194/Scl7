@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
     int fingerCode = 1;
 
+
+
+
+
     int face=0;
 
 
