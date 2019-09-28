@@ -103,7 +103,24 @@ public class ScrollingActivity extends AppCompatActivity {
 
 
 
+       fab.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
 
+
+               startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+
+
+
+               ComponentName adminReceiver = new ComponentName(ScrollingActivity.this, ScreenOffAdminReceiver.class);
+
+               Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+               intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,  adminReceiver);
+               intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"开启后就可以使用锁屏功能了...");//显示位置见图二
+
+               startActivityForResult(intent, 0);
+           }
+       });
 
 
 
