@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
 
+    float minMove = 1000; // 最小滑动距离
+
+
+
+
 
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -195,10 +200,10 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
             //接收name值
             String typ = bundle.getString("type");
 
-            String asname="a1.gif";
-            if(typ.equals("1")) asname="a1.gif";
-            if(typ.equals("2")) asname="a2.gif";
-            if(typ.equals("3")) asname="a3.gif";
+            String asname=typ;
+          //  if(typ.equals("1")) asname="a1.gif";
+          //  if(typ.equals("2")) asname="a2.gif";
+          //  if(typ.equals("3")) asname="a3.gif";
 
 
      //       Log.e("-----进到oncreate--------", "---------" );
@@ -215,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
             showMess = bundle.getString("mess");
             clsec = Integer.parseInt(bundle.getString("sec"));
             face = Integer.parseInt(bundle.getString("face"));
+            minMove = Integer.parseInt(bundle.getString("move"));
 
 
 
@@ -353,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements android.view.Gest
 
 
         //  try {
-        // GifDrawable gifFromAssets = new GifDrawable(getAssets(),"a4.gif" );
+
         //  gifImageView.setImageDrawable(gifFromAssets);
 
 
@@ -733,7 +739,7 @@ int scrSecClock=0;
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
-        float minMove = 420; // 最小滑动距离
+
         float minVelocity = 0; // 最小滑动速度
         float beginX = e1.getX();
         float endX = e2.getX();

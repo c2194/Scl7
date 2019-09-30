@@ -65,6 +65,8 @@ public class ScrollingActivity extends AppCompatActivity {
 
     String Ro_Radio="404";
 
+    String Ro_Move="2000";
+
     int Ro_State=0;
 
 
@@ -591,9 +593,15 @@ protected  void GetRegInfo(String act){
 
             Ro_ClockID = RE2[2];
             Ro_Radio = RE2[4];
+            Ro_Move=RE2[6];
 
             txtArray[5] = Ro_ClockID;
             txtArray[9] = Ro_Radio;
+            txtArray[10] = Ro_Move;
+
+            txtArray[12] = RE2[7];
+            txtArray[13] = RE2[8];
+            txtArray[14] = RE2[9];
 
             Ro_State=1;
 
@@ -612,8 +620,19 @@ protected  void GetRegInfo(String act){
             Ro_ClockID = RE2[2];
             Ro_Radio = RE2[4];
 
+
+            Ro_Move=RE2[6];
+
+
+
             txtArray[5] = Ro_ClockID;
             txtArray[9] = Ro_Radio;
+            txtArray[10] = Ro_Move;
+
+
+            txtArray[12] = RE2[7];
+            txtArray[13] = RE2[8];
+            txtArray[14] = RE2[9];
 
             Ro_State=1;
 

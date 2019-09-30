@@ -90,12 +90,31 @@ public class NLService extends NotificationListenerService {
 
                 Bundle bundle=new Bundle();
                 //传递name参数为tinyphp
-                bundle.putString("type", txtArray[4]);
+
+
+                if(txtArray[4].equals("1")) {
+                    bundle.putString("type", txtArray[12]);
+                }
+
+                if(txtArray[4].equals("2")) {
+                    bundle.putString("type", txtArray[13]);
+                }
+
+                if(txtArray[4].equals("3")) {
+                    bundle.putString("type", txtArray[14]);
+                }
+
+
+
+
+
+
                 bundle.putString("mess",txtArray[3]);
                 bundle.putString("sec",txtArray[6]);
                 bundle.putString("face",txtArray[7]);
                 bundle.putString("touch",txtArray[8]);
                 bundle.putString("radio",txtArray[9]);
+                bundle.putString("move",txtArray[10]);
 
 
                 intent.putExtras(bundle);
